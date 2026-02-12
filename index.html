@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For Amilah 💗</title>
+<style>
+  body {
+    margin: 0;
+    font-family: 'Georgia', serif;
+    background: linear-gradient(120deg, #ffd6e8, #ffeef6);
+    overflow-x: hidden;
+    text-align: center;
+    position: relative;
+  }
+
+  .page {
+    display: none;
+    min-height: 100vh;
+    padding: 50px 80px;
+  }
+
+  .active {
+    display: block;
+  }
+
+  h1 {
+    color: #b30059;
+    font-size: 3em;
+    margin-bottom: 20px;
+  }
+
+  input {
+    padding: 15px;
+    font-size: 20px;
+    border-radius: 12px;
+    border: 1px solid #ccc;
+    text-align: center;
+    width: 300px;
+  }
+
+  button {
+    margin-top: 15px;
+    padding: 15px 35px;
+    font-size: 20px;
+    border: none;
+    border-radius: 25px;
+    background: #ff5fa2;
+    color: white;
+    cursor: pointer;
+  }
+
+  button:hover {
+    background: #ff2f8e;
+  }
+
+  .letter {
+    max-width: 80%;
+    margin: auto;
+    background: white;
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+    line-height: 1.7;
+    color: #333;
+    font-size: 18px;
+    text-align: left;
+    white-space: pre-wrap;
+    overflow-y: auto;
+    max-height: 80vh; /* scrollable if letter is huge */
+  }
+
+  .heart {
+    position: fixed;
+    bottom: -20px;
+    font-size: 30px;
+    animation: float 6s linear infinite;
+    color: #ff5fa2;
+  }
+
+  @keyframes float {
+    0% { transform: translateY(0); opacity:1; }
+    100% { transform: translateY(-100vh); opacity:0; }
+  }
+
+  canvas {
+    position: fixed;
+    top:0;
+    left:0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 999;
+  }
+</style>
+</head>
+<body>
+
+<!-- PASSCODE PAGE -->
+<div id="lock" class="page active">
+  <h1>Hey Amilah 💕</h1>
+  <p>Enter the passcode to unlock something special</p>
+  <input type="password" id="code" placeholder="••••••">
+  <br>
+  <button onclick="unlock()">Unlock 💗</button>
+</div>
+
+<!-- LETTER PAGE -->
+<div id="letter" class="page">
+  <h1>For My Baby 💖</h1>
+  <div class="letter" id="letterText"></div>
+</div>
+
+<audio id="bgMusic" loop>
+  <source src="music.mp3" type="audio/mpeg">
+</audio>
+
+<canvas id="confetti"></canvas>
+
+<script>
+// FULL LETTER (paste exact text here, nothing removed)
+const letterMessage = `Hello babyyyyyyyyyyyyyy HAPPY 6 MONTHS MY BABYYYYY WOWWWW WHAT A MILESTONE I CANT BELIEVE IT BABYGIRL 🥳🥳🥳🥳🎉🎉🎉🎉these past 6 months have felt absolutely special and amazing to me baby this half of a year has alr felt like an eternity to me I have never been hit with such a wave of kindness magic and love by anyone or anything before in my life. To believe that it has been 6 months makes me feel so amazing and proud of how far we have come and how flipping grateful I am to have you in my life princess.These past few months have flown by but have also felt like a brand new life I have lived and forever wished for. I don't know how I will ever ever thank you for that my baby, you have lighten up my world again and I have got my spark back js because of you and you only my love. I dont know how ill ever thank you or pay u back for that darling but what I do know is that i will forever cherish the life i live with you and will forever give u the whole world my princess. This is just a milestone and I know for a fact that there is more and more and more to come my princess,I can't wait for these 6 months to turn into a year and years and decades and centuries to come my baby. For all the things my hands have held,the best by far is you my darling and for all the times my body has been hugged none have ever matches the warmth and peace of your arms baby girl, i have never ever have felt more at peace and home other than ur arms my queen you truly are special in every way and make me feel loved in every single way possible. You are the definition of beauty baby inside and out my love everytime i look at you i see a masterpiece crafted by god himself a living reminder that as long as am with you i will get all the happiness and love i can possibly get i dont only see you as my partner I see you as my soulmate,my wife,my other half,my future mother of my kids,my motivation,my light, my absolute world and everything you are something nothing and no one can ever afford in this planet u truly are a work of art baby girl every aspect of you is absolutely marvellous baby.For so long, I cried out in quiet moments, asking for someone who would understand me, love me, and see me and then you came into my life and found the answer l'd been waiting for.ur a divine gift. A blessing beyond what I ever dared to hope you are more than the love of my life, your my heart's home, my souls peace, my forever. your presence calms the chaos in me, your laughter lights up the darkest corners of my world, and your love heals parts me l didn't know were still hurting... (keep full text exactly as provided)`;
+
+// Unlock function
+function unlock() {
+  const input = document.getElementById("code").value;
+  if(input === "120825") {
+    document.getElementById("lock").classList.remove("active");
+    document.getElementById("letter").classList.add("active");
+    document.getElementById("letterText").textContent = "";
+    startTyping(letterMessage, 0);
+    document.getElementById("bgMusic").play();
+    startHearts();
+    startConfetti();
+  } else {
+    alert("Wrong passcode 😭 try again baby");
+  }
+}
+
+// Typing effect
+function startTyping(text, i) {
+  if(i < text.length){
+    document.getElementById("letterText").textContent += text.charAt(i);
+    setTimeout(()=> startTyping(text, i+1), 10);
+  }
+}
+
+// Floating hearts
+function createHeart() {
+  const heart = document.createElement("div");
+  heart.className = "heart";
+  heart.innerHTML = "💗";
+  heart.style.left = Math.random()*100 + "vw";
+  heart.style.animationDuration = (4 + Math.random()*3) + "s";
+  document.body.appendChild(heart);
+  setTimeout(()=> heart.remove(), 7000);
+}
+function startHearts(){ setInterval(createHeart, 500); }
+
+// Confetti
+const canvas = document.getElementById("confetti");
+const ctx = canvas.getContext("2d");
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+let confettiParticles = [];
+for(let i=0;i<150;i++){
+  confettiParticles.push({
+    x: Math.random()*canvas.width,
+    y: Math.random()*canvas.height,
+    r: Math.random()*6+2,
+    d: Math.random()*50+1,
+    color: `hsl(${Math.random()*360}, 100%, 50%)`,
+    tilt: Math.random()*10-10
+  });
+}
+function drawConfetti(){
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  for(let i=0;i<confettiParticles.length;i++){
+    let p = confettiParticles[i];
+    ctx.beginPath();
+    ctx.moveTo(p.x + p.tilt + p.r/2, p.y);
+    ctx.lineTo(p.x + p.tilt, p.y + p.r);
+    ctx.strokeStyle = p.color;
+    ctx.lineWidth = p.r/2;
+    ctx.stroke();
+  }
+  updateConfetti();
+}
+function updateConfetti(){
+  for(let i=0;i<confettiParticles.length;i++){
+    let p = confettiParticles[i];
+    p.y += (Math.cos(p.d) + 3 + p.r/2)/2;
+    p.tilt += Math.sin(p.d);
+    if(p.y > canvas.height){ p.y = -10; p.x = Math.random()*canvas.width; }
+  }
+}
+function startConfetti(){ setInterval(drawConfetti, 20); }
+
+// Resize canvas
+window.addEventListener("resize", ()=>{
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+});
+</script>
+
+</body>
+</html>
